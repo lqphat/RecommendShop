@@ -8,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RecommendShop.Data;
-using RecommendShop.Services.TikiServices.BaseTikiService;
-using RecommendShop.Services.TikiServices.ProductTiKiService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +27,6 @@ namespace RecommendShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IBaseTikiService, BaseTikiService>();
-            services.AddTransient<IProductTikiService, ProductTikiService>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

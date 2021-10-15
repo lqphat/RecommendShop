@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace RecommendShop.Models
 {
-    public class ReviewModel
+    public class AttributeModel
     {
         [Key]
-        public string Id { get; set; }
-        public string Content { get; set; }
-        public string Title { get; set; }
-        public float Rank { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string value { get; set; }
 
-        public string ProductId { get; set; }
         [ForeignKey("ProductId")]
+        public string ProductId { get; set; }
         public ProductModel Product { get; set; }
     }
 }

@@ -16,6 +16,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +26,9 @@
     <Folder Include="Areas\Customer\Data\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Areas\Customer\Views\" />
-    <Folder Include="ModelExt\" />
     <Folder Include="Services\LazadaServices\" />
     <Folder Include="Services\ShopeeServices\" />
-    <Folder Include="Services\TikiServices\ReviewTikiService\" />
+    <Folder Include="Services\TikiServices\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
