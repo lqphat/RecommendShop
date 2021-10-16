@@ -20,7 +20,7 @@ namespace RecommendShop.ModelsDTO.TikiItemProductModelDTO
             foreach (var item in attributes)
             {
                 var attribute = new Models.AttributeModel();
-                attribute.id = item.code;
+                attribute.AttributeId = item.code;
                 attribute.name = item.name;
                 attribute.value = item.value;
                 attribute.ProductId = req.id.ToString();

@@ -184,17 +184,27 @@ namespace RecommendShop.Areas.Admin.Controllers
                 #endregion
             }
 
-            ViewBag.c1 = product.Id;
-            ViewBag.c2 = product.Name;
-            ViewBag.c3 = listReview[0].Title;
-            ViewBag.c4 = listReview[0].Content;
-            ViewBag.c5 = listCate[0].Name;
-            ViewBag.c6 = listCate[1].Name;
+            ViewBag.c1 = product.ProductId;
+            //ViewBag.c2 = product.Name;
+            //ViewBag.c3 = listReview[0].Title;
+            //ViewBag.c4 = listReview[0].Content;
+            //ViewBag.c5 = listCate[0].Name;
+            //ViewBag.c6 = listCate[1].Name;
 
-            _context.Categories.AddRange(listCate);
+            var lsCate = _context.Categories.ToList();
+            foreach (var item in listCate)
+            {
+                var temp = lsCate.Where(c => c.CategoryId == item.CategoryId).FirstOrDefault();
+                if (lsCate.Count == 0 || temp == null)
+                {
+                    _context.Categories.Add(item);
+                }
+            }
             _context.Reviews.AddRange(listReview);
             _context.Products.Add(product);
             _context.Attributes.AddRange(listAttribute);
+
+
             _context.SaveChanges();
             return View();
         }

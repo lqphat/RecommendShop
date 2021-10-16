@@ -26,7 +26,7 @@ namespace RecommendShop.ModelsDTO.TikiItemReviewModelDTO
             foreach (var item in req)
             {
                 var review = new ReviewModel();
-                review.Id = item.id.ToString();
+                review.ReviewId = item.id.ToString();
                 review.Title = item.title;
                 review.Content = item.content;
                 review.Rank = item.rating;

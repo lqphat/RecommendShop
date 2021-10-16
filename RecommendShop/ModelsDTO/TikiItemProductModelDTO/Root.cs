@@ -77,15 +77,15 @@ namespace RecommendShop.ModelsDTO.TikiItemProductModelDTO
         {
             return new ProductModel()
             {
-                Id = req.id.ToString(),
+                ProductId = req.id.ToString(),
                 Name = req.name,
                 BrandName = req.brand.name,
                 Description = req.description,
                 ImageMainUrl = req.thumbnail_url,
                 PriceCurrent = req.price.ToString(),
                 PriceOld = req.original_price.ToString(),
-                CategoryId = req.categories.id.ToString(),
                 Rating = req.rating_average,
+                CategoryId = req.breadcrumbs[req.breadcrumbs.Count - 2].category_id.ToString()
             };
         }
 
@@ -95,7 +95,7 @@ namespace RecommendShop.ModelsDTO.TikiItemProductModelDTO
             for (int i = 0; i < req.Count; i++)
             {
                 var category = new CategoryModel();
-                category.Id = req[i].category_id.ToString();
+                category.CategoryId = req[i].category_id.ToString();
                 category.Name = req[i].name;
                 category.Level = i;
                 category.ParentId = i == 0 ? null : req[i - 1].category_id.ToString();

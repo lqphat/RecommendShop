@@ -10,9 +10,12 @@ namespace RecommendShop.Models
     public class AttributeModel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string id { get; set; }
         public string name { get; set; }
         public string value { get; set; }
+        public string AttributeId { get; set; }
+
 
         [ForeignKey("ProductId")]
         public string ProductId { get; set; }

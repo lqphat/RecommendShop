@@ -222,7 +222,11 @@ namespace RecommendShop.Migrations
             modelBuilder.Entity("RecommendShop.Models.AttributeModel", b =>
                 {
                     b.Property<string>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AttributeId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
@@ -242,7 +246,7 @@ namespace RecommendShop.Migrations
 
             modelBuilder.Entity("RecommendShop.Models.CategoryModel", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Level")
@@ -254,14 +258,14 @@ namespace RecommendShop.Migrations
                     b.Property<string>("ParentId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("RecommendShop.Models.ProductModel", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BrandName")
@@ -288,7 +292,7 @@ namespace RecommendShop.Migrations
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
@@ -298,6 +302,7 @@ namespace RecommendShop.Migrations
             modelBuilder.Entity("RecommendShop.Models.ReviewModel", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
@@ -308,6 +313,9 @@ namespace RecommendShop.Migrations
 
                     b.Property<float>("Rank")
                         .HasColumnType("real");
+
+                    b.Property<string>("ReviewId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -373,7 +381,7 @@ namespace RecommendShop.Migrations
             modelBuilder.Entity("RecommendShop.Models.AttributeModel", b =>
                 {
                     b.HasOne("RecommendShop.Models.ProductModel", "Product")
-                        .WithMany("Configuration")
+                        .WithMany("ListConfiguration")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
@@ -404,7 +412,7 @@ namespace RecommendShop.Migrations
 
             modelBuilder.Entity("RecommendShop.Models.ProductModel", b =>
                 {
-                    b.Navigation("Configuration");
+                    b.Navigation("ListConfiguration");
 
                     b.Navigation("ListReview");
                 });

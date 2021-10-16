@@ -10,13 +10,16 @@ namespace RecommendShop.Models
     public class ReviewModel
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
+        public string ReviewId { get; set; }
         public string Content { get; set; }
         public string Title { get; set; }
         public float Rank { get; set; }
 
-        public string ProductId { get; set; }
         [ForeignKey("ProductId")]
+        public string ProductId { get; set; }
         public ProductModel Product { get; set; }
+
     }
 }
