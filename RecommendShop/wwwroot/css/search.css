@@ -1,0 +1,12 @@
+.dropdown-menu {
+    width: 230px !important;
+}
+#btn-cate{
+    width: 230px !important;
+}
+.cate-level1{
+    text-decoration: none !important
+}
+.cate-level1 h5{
+    color: black !important;
+}

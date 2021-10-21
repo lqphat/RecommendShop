@@ -1,0 +1,218 @@
+﻿@model RecommendShop.Areas.Customer.ViewModels.HomeVm
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@{ 
+    var cateLevel0 = Model.ListCategory.Where(c => c.Level == 0);
+    var cateLevel1 = Model.ListCategory.Where(c => c.Level == 1);
+
+}
+<!-- Section -->
+<div class="container mt-3">
+    <!-- Section Category -->
+    <div class="row row-category">
+        <!-- Category -->
+        <div class="col-3 div-category bg-light col-category text-center">
+            <button type="button" class="btn btn-dark"><h5>DANH MỤC SẢN PHẨM</h5></button>
+            @foreach (var cate0 in cateLevel0)
+            {
+                <div class="btn-group dropend ">
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        @cate0.Name
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == cate0.CategoryId))
+                        {
+                            <li><button class="dropdown-item btn-light" type="button">@cate1.Name</button></li>
+                        }
+                        @*<li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
+                            <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>*@
+                    </ul>
+                </div>
+            }
+            @*<div class="btn-group dropend ">
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Điện thoại - Máy tính bảng
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
+                        <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>
+                    </ul>
+                </div>
+                <div class="btn-group dropend ">
+                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Điện thoại - Máy tính bảng
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
+                        <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>
+                    </ul>
+                </div>*@
+        </div>
+        <!-- Slide img ads -->
+        <div class="col-9">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://cdn.cellphones.com.vn/media/ltsoft/promotion/tai-nghe-sony-690-300-max.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://cdn.cellphones.com.vn/media/ltsoft/promotion/tlhw690-300-max.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://cdn.cellphones.com.vn/media/ltsoft/promotion/asus-oled-690x300_10_.png" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3 img ads -->
+    <div class="row row-3-img mt-3">
+        <div class="col-3 mr-1">
+            <img src="https://salt.tikicdn.com/cache/w280/ts/banner/59/36/a7/6bf067262903f0baa0a7bdd4673ae1d0.png.webp" alt="">
+        </div>
+        <div class="col-3 mr-1 ml-1">
+            <img src="https://salt.tikicdn.com/cache/w280/ts/banner/45/1d/35/991c7c397ee37a6f925451d297d9e3ee.png.webp" alt="">
+        </div>
+        <div class="col-3 mr-1 ml-1">
+            <img src="https://salt.tikicdn.com/cache/w280/ts/banner/e7/52/bd/329369efd90640af2800dcd217a7137b.png.webp" alt="">
+        </div>
+        <div class="col-3 ml-1">
+            <img src="https://salt.tikicdn.com/cache/w280/ts/banner/5b/82/c2/67b49d0e035567c6bc38a50cf580ef87.png.webp" alt="">
+        </div>
+    </div>
+    @foreach (var item1 in cateLevel0)
+    {
+        <!-- Section Category 1 -->
+<div class="row mt-4">
+    <!-- Category level 0 -->
+    <div class="col-12 text-center ">
+        <h4>@item1.Name</h4>
+    </div>
+    <!-- List category level 1 -->
+    <div class="row text-center text-secondary">
+        @foreach (var item2 in cateLevel1.Where(c => c.ParentId == item1.CategoryId))
+        {
+            <div class="col-2 ">
+                <h5>@item2.Name</h5>
+            </div>
+        }
+        @*<div class="col-2 ">
+                <h5>Iphone</h5>
+            </div>
+            <div class="col-2
+                <h5>Ipad</h5>
+            </div>*@
+    </div>
+    <!-- List Card Product Row: 4 Column: 2-->
+    @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == item1.CategoryId))
+    {
+        @foreach (var item in Model.ListProduct.Where(p => p.CategoryId == item1.ParentId))
+        {
+            <div class="row mt-3">
+                <a href="" class="card-product">
+                    <div class="col-2 mr-2 mb-4 bg-white">
+                        <div class="card text-center">
+                            <img class="card-img-top mt-3" src="@item.ImageMainUrl" alt="Card image cap">
+                            <div class="card-body">
+                                <p class="card-text"><strong>@item.Name</strong></p>
+                                <h6 class="card-text text-dark">@item.PriceCurrent đ <span class="discount"><button class="text-danger btn-outline-light"><strong>@item.PriceOld đ</strong></button></span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    }
+    @*<div class="row mt-3">
+            <a href="" class="card-product">
+                <div class="col-2 mr-2 mb-4 bg-white">
+                    <div class="card text-center">
+                        <img class="card-img-top mt-3" src="https://salt.tikicdn.com/cache/100x100/ts/product/14/f0/60/9ef6497f38bb2e3409c04a676be75ab5.jpg.webp" alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text"><strong>Iphone 13 Promax 256Gb</strong></p>
+                            <h6 class="card-text text-dark">23.000.000đ <span class="discount"><button class="text-danger btn-outline-light"><strong>-13%</strong></button></span></h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>*@
+</div>
+    }
+    <!-- Section Category 1 -->
+    <!--<div class="row mt-4">-->
+    <!-- Category level 0 -->
+    <!--<div class="col-12 text-center ">
+        <h4>Điện thoại - Máy tính bảng</h4>
+    </div>-->
+    <!-- List category level 1 -->
+    <!--<div class="row text-center text-secondary">
+        <div class="col-2 ">
+            <h5>Iphone</h5>
+        </div>
+        <div class="col-2">
+            <h5>Ipad</h5>
+        </div>
+    </div>-->
+    <!-- List Card Product Row: 4 Column: 2-->
+    <!--<div class="row mt-3">
+            <a href="" class="card-product">
+                <div class="col-2 mr-2 mb-4 bg-white">
+                    <div class="card text-center">
+                        <img class="card-img-top mt-3" src="https://salt.tikicdn.com/cache/100x100/ts/product/14/f0/60/9ef6497f38bb2e3409c04a676be75ab5.jpg.webp" alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text"><strong>Iphone 13 Promax 256Gb</strong></p>
+                            <h6 class="card-text text-dark">23.000.000đ <span class="discount"><button class="text-danger btn-outline-light"><strong>-13%</strong></button></span></h6>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>-->
+    <!-- Section Category 1 -->
+    <!-- Category level 0 -->
+    <!-- List category level 1 -->
+    <!-- List Card Product Row: 4 Column: 2-->
+    <!-- Section Category 1 -->
+    <!-- Category level 0 -->
+    <!-- List category level 1 -->
+    <!-- List Card Product Row: 4 Column: 2-->
+    <!-- Section Category 1 -->
+    <!-- Category level 0 -->
+    <!-- List category level 1 -->
+    <!-- List Card Product Row: 4 Column: 2-->
+    <!-- Send mail -->
+    <div class="row mb-4">
+        <div class="col-12 mt-3 mb-3 text-center">
+            <h3>ĐĂNG KÝ NHẬN ƯU ĐÃI</h3>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4 mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Vui lòng nhập Email để đăng ký!">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary button-search" type="button">
+                        <h5 id="register">ĐĂNG KÝ</h5>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>

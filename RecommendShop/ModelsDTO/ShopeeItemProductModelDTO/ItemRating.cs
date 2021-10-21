@@ -7,7 +7,7 @@ namespace RecommendShop.ModelsDTO.ShopeeItemProductModelDTO
 {
     public class ItemRating
     {
-        public int rating_star { get; set; }
-        public List<int> rating_count { get; set; }
+        public double rating_star { get; set; }
+        public List<double> rating_count { get; set; }
     }
 }

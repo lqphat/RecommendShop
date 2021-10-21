@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommend Shop</title>
+    <!-- Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'>
+    <link rel="stylesheet" href="~/css/index.css">
+    <link href='//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' rel='stylesheet' />
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Sale off -->
+        <div class="sale-off container-fluid bg-light p-2">
+            <div class="row">
+                <div class="col-3 d-flex justify-content-center text-center m-0">
+                    <h6>(028) 38333056</h6>
+                </div>
+                <div class="col-5 text-center">
+                    <h5>SALE OFF 69%</h5>
+                </div>
+                <div class="col-3 text-center">
+                    <h6>155 Đào Duy Từ, P.5, Q.10, TP.HCM</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Logo - search - bag -->
+        <div class="container mt-3 ">
+            <div class="row">
+                <div class="col-3 logo text-align-left">
+                    <h2>RecommendShop</h2>
+                </div>
+                <div class="col-6 search-box align-center">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search this blog">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary button-search" type="button">
+                                <p>TÌM KIẾM</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 text-center div-login-bag">
+                    <button class="btn btn-secondary button-search" id="login" type="button">
+                        <p>ĐĂNG NHẬP</p>
+                    </button>
+                    <button class="btn btn-secondary button-search" id="bag" type="button">
+                        <p>GIỎ HÀNG</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="nb-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="about">
+                        <div class="social-media">
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-1">
+                                    <ul class="list-inline">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-facebook"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-1">
+                                    <ul class="list-inline">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-1">
+                                    <ul class="list-inline">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-1">
+                                    <ul class="list-inline">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">THÔNG TIN RecommendShop</h2>
+                        <ul class="list-unstyled">
+                            <p>(028) 38333056</p>
+                            <p>reccomendshop@gmail.com</p>
+                            <p>155 Đào Duy Từ, P.5, Q.10, TP.HCM</p>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">HỢP TÁC VÀ LIÊN KẾT</h2>
+                        <ul class="list-unstyled">
+                            <p> APPLE, SAMSUNG,...</p>
+                            <p> HB Bank, TP Bank,...</p>
+                            <p> MOMO, VNPAY ...</p>
+                            <p> Giao hàng nhanh,...</p>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">CHÍNH SÁCH</h2>
+                        <ul class="list-unstyled">
+                            <p>Chính sách bảo hàng</p>
+                            <p>Chính sách đổi trả</p>
+                            <p>Chính sách hỗ trợ</p>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">THANH TOÁN</h2>
+                        <p>Thanh toán đa dạng: Tiền mặt, ATM, VISA</p>
+                        <P>Ví điện tử: MÔM, ZALOPAY, VNPAY ...</P>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Copyright © 2021. RecommendShop.</p>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
+            </div>
+        </section>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

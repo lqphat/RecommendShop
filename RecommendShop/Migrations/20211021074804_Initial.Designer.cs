@@ -10,7 +10,7 @@ using RecommendShop.Data;
 namespace RecommendShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211016060352_Initial")]
+    [Migration("20211021074804_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -275,6 +275,9 @@ namespace RecommendShop.Migrations
 
                     b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CategoryIdLevel0")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

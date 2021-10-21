@@ -177,6 +177,7 @@ namespace RecommendShop.Migrations
                     PriceOld = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageMainUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryIdLevel0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rating = table.Column<double>(type: "float", nullable: false),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

@@ -18,6 +18,7 @@ namespace RecommendShop.Models
         public string PriceOld { get; set; }
         public string Description { get; set; }
         public string ImageMainUrl { get; set; }
+        public string CategoryIdLevel0 { get; set; }
         public double Rating { get; set; }
         public List<AttributeModel> ListConfiguration { get; set; }
         public List<ReviewModel> ListReview { get; set; }

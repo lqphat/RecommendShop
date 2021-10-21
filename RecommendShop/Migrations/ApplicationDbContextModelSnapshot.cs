@@ -274,6 +274,9 @@ namespace RecommendShop.Migrations
                     b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("CategoryIdLevel0")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 

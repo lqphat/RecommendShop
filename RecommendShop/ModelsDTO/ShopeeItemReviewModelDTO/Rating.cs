@@ -34,7 +34,7 @@ namespace RecommendShop.ModelsDTO.ShopeeItemReviewModelDTO
         public object delete_operator { get; set; }
         public ItemRatingReply ItemRatingReply { get; set; }
         public object tags { get; set; }
-        public int editable_date { get; set; }
+        public double? editable_date { get; set; }
         public object show_reply { get; set; }
         public object like_count { get; set; }
         public object liked { get; set; }

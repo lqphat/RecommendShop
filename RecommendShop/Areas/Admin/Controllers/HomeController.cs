@@ -26,6 +26,7 @@ namespace RecommendShop.Areas.Admin.Controllers
         private RestClient clientProduct;
         private RestClient clientReview;
         //private IRestResponse responseReview;
+        private double percent;
         private readonly ApplicationDbContext _context;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
@@ -45,16 +46,25 @@ namespace RecommendShop.Areas.Admin.Controllers
         {
             if (productLink.Contains("https://tiki.vn"))
             {
-                var shortPath = productLink.Substring(0, productLink.IndexOf("?"));
-                int indexOfDot = shortPath.LastIndexOf(".");
-                int indexOfDash = shortPath.LastIndexOf("-");
-
+                int indexOfDot, indexOfDash;
+                if (productLink.Contains("?"))
+                {
+                    var shortPath = productLink.Substring(0, productLink.IndexOf("?"));
+                     indexOfDot = shortPath.LastIndexOf(".");
+                     indexOfDash = shortPath.LastIndexOf("-");
+                }
+                else
+                {
+                     indexOfDot = productLink.LastIndexOf(".");
+                     indexOfDash = productLink.LastIndexOf("-");
+                }
                 int startIndexProductId = indexOfDash + 2;
                 int lengProductId = indexOfDot - startIndexProductId;
 
                 productId = productLink.Substring(startIndexProductId, lengProductId);
                 type = "TIKI";
                 //path = $"{shortPath}\n{productId}\n{shopId}";
+
             }
             else if (productLink.Contains("https://shopee.vn"))
             {
@@ -104,7 +114,6 @@ namespace RecommendShop.Areas.Admin.Controllers
             var listRating = new List<Rating>();
             var listReview = new List<ReviewModel>();
             var listAttribute = new List<AttributeModel>();
-            //var list
             if (type == "TIKI")
             {
                 #region PRODUCT
@@ -155,7 +164,17 @@ namespace RecommendShop.Areas.Admin.Controllers
                     listReview.AddRange(reviewOnePage);
                 }
                 #endregion
-
+                var lsCate = _context.Categories.ToList();
+                foreach (var item in listCate)
+                {
+                    var temp = lsCate.Where(c => c.CategoryId == item.CategoryId).FirstOrDefault();
+                    if (lsCate.Count == 0 || temp == null)
+                    {
+                        _context.Categories.Add(item);
+                    }
+                }
+                _context.Products.Add(product);
+                _context.Attributes.AddRange(listAttribute);
             }
             else if(type == "SHOPEE")
             {
@@ -167,6 +186,8 @@ namespace RecommendShop.Areas.Admin.Controllers
                 IRestResponse responseProduct = clientProduct.Execute(requestProduct);
 
                 var productDto = Newtonsoft.Json.JsonConvert.DeserializeObject<ModelsDTO.ShopeeItemProductModelDTO.Root>(responseProduct.Content);
+
+                var descrition = productDto.data.description;
                 #endregion
 
                 #region REVIEW
@@ -180,31 +201,62 @@ namespace RecommendShop.Areas.Admin.Controllers
 
                 listRating = reviewDto.data.ratings;
 
-                listReview = listRating.ToReviewModel();
+                // Check Product existed?
+                var productExist = _context.Products.ToList();
+                foreach (var temp in productExist)
+                {
+                    var target = CalculateSimilarity(temp.Description, descrition);
+                    percent = target;
+                    if (target > 50)
+                    {
+                        foreach (var item in listRating)
+                        {
+                            if(_context.Reviews.Where(r => r.ReviewId.Equals(item.cmtid)).FirstOrDefault() != null)
+                            {
+                                var review = new ReviewModel();
+                                review.ReviewId = item.cmtid.ToString();
+                                review.Content = item.comment;
+                                review.Rank = item.rating_star;
+                                switch (item.rating_star)
+                                {
+                                    case 5:
+                                        review.Title = "Cực kì hài lòng";
+                                        break;
+                                    case 4:
+                                        review.Title = "Hài lòng";
+                                        break;
+                                    case 3:
+                                        review.Title = "Bình thường";
+                                        break;
+                                    case 2:
+                                        review.Title = "Không hài lòng";
+                                        break;
+                                    case 1:
+                                        review.Title = "Rất tệ";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                review.ProductId = temp.ProductId;
+                                listReview.Add(review);
+                            }
+                        }
+                    }
+                }
+
                 #endregion
             }
 
-            ViewBag.c1 = product.ProductId;
             //ViewBag.c2 = product.Name;
             //ViewBag.c3 = listReview[0].Title;
             //ViewBag.c4 = listReview[0].Content;
             //ViewBag.c5 = listCate[0].Name;
             //ViewBag.c6 = listCate[1].Name;
+            //ViewBag.c1 = product.ProductId;
+            ViewBag.c2 = percent;
+            ViewBag.c3 = _context.Reviews.Count();
 
-            var lsCate = _context.Categories.ToList();
-            foreach (var item in listCate)
-            {
-                var temp = lsCate.Where(c => c.CategoryId == item.CategoryId).FirstOrDefault();
-                if (lsCate.Count == 0 || temp == null)
-                {
-                    _context.Categories.Add(item);
-                }
-            }
             _context.Reviews.AddRange(listReview);
-            _context.Products.Add(product);
-            _context.Attributes.AddRange(listAttribute);
-
-
             _context.SaveChanges();
             return View();
         }
@@ -218,6 +270,53 @@ namespace RecommendShop.Areas.Admin.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Compare description -> same product
+        double CalculateSimilarity(string source, string target)
+        {
+            if ((source == null) || (target == null)) return 0.0;
+            if ((source.Length == 0) || (target.Length == 0)) return 0.0;
+            if (source == target) return 1.0;
+
+            int stepsToSame = ComputeLevenshteinDistance(source, target);
+            return (1.0 - ((double)stepsToSame / (double)Math.Max(source.Length, target.Length))) * 100;
+        }
+
+        int ComputeLevenshteinDistance(string source, string target)
+        {
+            if ((source == null) || (target == null)) return 0;
+            if ((source.Length == 0) || (target.Length == 0)) return 0;
+            if (source == target) return source.Length;
+
+            int sourceWordCount = source.Length;
+            int targetWordCount = target.Length;
+
+            // Step 1
+            if (sourceWordCount == 0)
+                return targetWordCount;
+
+            if (targetWordCount == 0)
+                return sourceWordCount;
+
+            int[,] distance = new int[sourceWordCount + 1, targetWordCount + 1];
+
+            // Step 2
+            for (int i = 0; i <= sourceWordCount; distance[i, 0] = i++) ;
+            for (int j = 0; j <= targetWordCount; distance[0, j] = j++) ;
+
+            for (int i = 1; i <= sourceWordCount; i++)
+            {
+                for (int j = 1; j <= targetWordCount; j++)
+                {
+                    // Step 3
+                    int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
+
+                    // Step 4
+                    distance[i, j] = Math.Min(Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1), distance[i - 1, j - 1] + cost);
+                }
+            }
+            return distance[sourceWordCount, targetWordCount];
         }
     }
 }
