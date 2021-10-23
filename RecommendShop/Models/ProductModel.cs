@@ -20,6 +20,7 @@ namespace RecommendShop.Models
         public string ImageMainUrl { get; set; }
         public string CategoryIdLevel0 { get; set; }
         public double Rating { get; set; }
+        public string UrlKey { get; set; }
         public List<AttributeModel> ListConfiguration { get; set; }
         public List<ReviewModel> ListReview { get; set; }
 

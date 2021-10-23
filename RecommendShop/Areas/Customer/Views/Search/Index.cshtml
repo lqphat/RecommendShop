@@ -1,64 +1,62 @@
-﻿@{
+﻿@model RecommendShop.Areas.Customer.ViewModels.SearchVm
+
+@{
     ViewData["Title"] = "Search Page";
+}
+@{
+    var cateLevel0 = Model.ListCategory.Where(c => c.Level == 0);
+    var cateLevel1 = Model.ListCategory.Where(c => c.Level > 0); /*Chưa tối ưu hóa*/
+
 }
 <link rel="stylesheet" href="~/css/search.css">
 <link rel="stylesheet" href="~/css/index.css">
 
 <div class="container mt-4">
+    <!-- Section Category -->
     <div class="row row-category">
         <!-- Category -->
         <div class="col-12 div-category bg-light col-category text-center">
-            <div class="btn-group dropdown ">
-                <button type="button" class="btn dropdown-toggle" id="btn-cate" data-bs-toggle="dropdown" aria-expanded="false">
-                    Điện thoại - Máy tính bảng
-                </button>
-                <ul class="dropdown-menu">
-                    <li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
-                    <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>
-                </ul>
-            </div>
-            <div class="btn-group dropdown ">
-                <button type="button" class="btn dropdown-toggle" id="btn-cate" data-bs-toggle="dropdown" aria-expanded="false">
-                    Máy tính xách tay
-                </button>
-                <ul class="dropdown-menu">
-                    <li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
-                    <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>
-                </ul>
-            </div>
+            @foreach (var cate0 in cateLevel0)
+            {
+                <div class="btn-group dropdown ">
+                    <button type="button" class="btn dropdown-toggle" id="btn-cate" data-bs-toggle="dropdown" aria-expanded="false">
+                        @cate0.Name
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == cate0.CategoryId))
+                        {
+                            <li>
+                                <a id="category-level1" asp-controller="Search" asp-action="SearchByCategoryId" asp-route-id="@cate1.CategoryId" style="text-decoration:none !important">
+                                    <button class="dropdown-item btn-light" type="button">@cate1.Name</button>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 
-    <div class="row mt-4">
-        <!-- List category level 1 -->
-        <div class="row text-center text-secondary">
-            <div class="col-2 ">
-                <a href="" class="cate-level1">
-                    <h5>Iphone</h5>
-                </a>
-            </div>
-            <div class="col-2">
-                <a href="" class="cate-level1">
-                    <h5>Iphone</h5>
-                </a>
-            </div>
-        </div>
-        <!-- List Card Product Row: 4 Column: 2-->
-        <div class="row mt-3">
-            <a href="" class="card-product">
-                <div class="col-2 mr-2 mb-4 bg-white">
-                    <div class="card text-center">
-                        <img class="card-img-top mt-3" src="https://salt.tikicdn.com/cache/100x100/ts/product/14/f0/60/9ef6497f38bb2e3409c04a676be75ab5.jpg.webp" alt="Card image cap">
+    <div class="row mt-3">
+
+        @foreach (var item in Model.ListProduct)
+        {
+            <div class="col-2 mr-2 mb-4 bg-white">
+                <a class="card-product" asp-controller="Detail" asp-action="Index" asp-route-id="@item.ProductId">
+                    <div class="card text-center" style="height: 400px !important">
+                        <img class="card-img-top mt-3" src="@item.ImageMainUrl" alt="Card image cap">
                         <div class="card-body">
-                            <p class="card-text"><strong>Iphone 13 Promax 256Gb</strong></p>
-                            <h6 class="card-text text-dark">23.000.000đ <span class="discount"><button class="text-danger btn-outline-light"><strong>-13%</strong></button></span></h6>
+                            <p class="card-text"><strong>@item.Name</strong></p>
+                            <h6 class="card-text text-dark">@item.PriceCurrent đ <span class="discount"><button class="text-danger btn-outline-light"><strong><dek>@item.PriceOld đ</dek></strong></button></span></h6>
                         </div>
                     </div>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
+        }
     </div>
 </div>
+
 
 <!-- Send mail -->
 <div class="row mb-4">

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 @{ 
-    var cateLevel0 = Model.ListCategory.Where(c => c.Level == 0);
-    var cateLevel1 = Model.ListCategory.Where(c => c.Level == 1);
-
+    var cateLevel0 = Model.ListCategory.Where(c => c.Level == 0).ToList();
+    var cateLevel1 = Model.ListCategory.Where(c => c.Level > 0).ToList(); /*Chưa tối ưu hóa*/
 }
 <!-- Section -->
 <div class="container mt-3">
@@ -18,14 +17,19 @@
             @foreach (var cate0 in cateLevel0)
             {
                 <div class="btn-group dropend ">
-                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        @cate0.Name
-                    </button>
-                    <ul class="dropdown-menu">
-                        @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == cate0.CategoryId))
-                        {
-                            <li><button class="dropdown-item btn-light" type="button">@cate1.Name</button></li>
-                        }
+                        <button type="submit" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            @cate0.Name
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == cate0.CategoryId))
+                            {
+                                <li>
+                                    <a id="category-level1" asp-controller="Search" asp-action="SearchByCategoryId" asp-route-id="@cate1.CategoryId" style="text-decoration:none !important">
+                                        <button class="dropdown-item btn-light" type="submit">@cate1.Name</button>
+                                    </a>
+                                </li>
+                            }
                         @*<li><button class="dropdown-item btn-light" type="button">Iphone</button></li>
                             <li><button class="dropdown-item btn-light" type="button">Ipad</button></li>*@
                     </ul>
@@ -99,61 +103,59 @@
     @foreach (var item1 in cateLevel0)
     {
         <!-- Section Category 1 -->
-<div class="row mt-4">
-    <!-- Category level 0 -->
-    <div class="col-12 text-center ">
-        <h4>@item1.Name</h4>
-    </div>
-    <!-- List category level 1 -->
-    <div class="row text-center text-secondary">
-        @foreach (var item2 in cateLevel1.Where(c => c.ParentId == item1.CategoryId))
-        {
-            <div class="col-2 ">
-                <h5>@item2.Name</h5>
+        <div class="row mt-4">
+            <!-- Category level 0 -->
+            <div class="col-12 text-center ">
+                <h4>@item1.Name</h4>
             </div>
-        }
-        @*<div class="col-2 ">
-                <h5>Iphone</h5>
+            <!-- List category level 1 -->
+            <div class="row text-center text-secondary">
+                @foreach (var item2 in cateLevel1.Where(c => c.ParentId == item1.CategoryId))
+                {
+                    <div class="col-2 ">
+                        <h5>@item2.Name</h5>
+                    </div>
+                }
+                @*<div class="col-2 ">
+                        <h5>Iphone</h5>
+                    </div>
+                    <div class="col-2
+                        <h5>Ipad</h5>
+                    </div>*@
             </div>
-            <div class="col-2
-                <h5>Ipad</h5>
-            </div>*@
-    </div>
-    <!-- List Card Product Row: 4 Column: 2-->
-    @foreach (var cate1 in cateLevel1.Where(c => c.ParentId == item1.CategoryId))
-    {
-        @foreach (var item in Model.ListProduct.Where(p => p.CategoryId == item1.ParentId))
-        {
+            <!-- List Card Product Row: 4 Column: 2-->
             <div class="row mt-3">
-                <a href="" class="card-product">
+
+                @foreach (var item in Model.ListProduct.Where(p => p.CategoryIdLevel0 == item1.CategoryId))
+                {
                     <div class="col-2 mr-2 mb-4 bg-white">
-                        <div class="card text-center">
-                            <img class="card-img-top mt-3" src="@item.ImageMainUrl" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text"><strong>@item.Name</strong></p>
-                                <h6 class="card-text text-dark">@item.PriceCurrent đ <span class="discount"><button class="text-danger btn-outline-light"><strong>@item.PriceOld đ</strong></button></span></h6>
+                        <a class="card-product" asp-controller="Detail" asp-action="Index" asp-route-id="@item.ProductId">
+                            <div class="card text-center" style="height: 400px !important">
+                                <img class="card-img-top mt-3" src="@item.ImageMainUrl" alt="Card image cap">
+                                <div class="card-body">
+                                    <p class="card-text"><strong>@item.Name</strong></p>
+                                    <h6 class="card-text text-dark">@item.PriceCurrent đ <span class="discount"><button class="text-danger btn-outline-light"><strong><dek>@item.PriceOld đ</dek></strong></button></span></h6>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+
+            @*<div class="row mt-3">
+                    <a href="" class="card-product">
+                        <div class="col-2 mr-2 mb-4 bg-white">
+                            <div class="card text-center">
+                                <img class="card-img-top mt-3" src="https://salt.tikicdn.com/cache/100x100/ts/product/14/f0/60/9ef6497f38bb2e3409c04a676be75ab5.jpg.webp" alt="Card image cap">
+                                <div class="card-body">
+                                    <p class="card-text"><strong>Iphone 13 Promax 256Gb</strong></p>
+                                    <h6 class="card-text text-dark">23.000.000đ <span class="discount"><button class="text-danger btn-outline-light"><strong>-13%</strong></button></span></h6>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-        }
-
-    }
-    @*<div class="row mt-3">
-            <a href="" class="card-product">
-                <div class="col-2 mr-2 mb-4 bg-white">
-                    <div class="card text-center">
-                        <img class="card-img-top mt-3" src="https://salt.tikicdn.com/cache/100x100/ts/product/14/f0/60/9ef6497f38bb2e3409c04a676be75ab5.jpg.webp" alt="Card image cap">
-                        <div class="card-body">
-                            <p class="card-text"><strong>Iphone 13 Promax 256Gb</strong></p>
-                            <h6 class="card-text text-dark">23.000.000đ <span class="discount"><button class="text-danger btn-outline-light"><strong>-13%</strong></button></span></h6>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>*@
-</div>
+                    </a>
+                </div>*@
+        </div>
     }
     <!-- Section Category 1 -->
     <!--<div class="row mt-4">-->

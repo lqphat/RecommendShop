@@ -247,14 +247,7 @@ namespace RecommendShop.Areas.Admin.Controllers
                 #endregion
             }
 
-            //ViewBag.c2 = product.Name;
-            //ViewBag.c3 = listReview[0].Title;
-            //ViewBag.c4 = listReview[0].Content;
-            //ViewBag.c5 = listCate[0].Name;
-            //ViewBag.c6 = listCate[1].Name;
-            //ViewBag.c1 = product.ProductId;
-            ViewBag.c2 = percent;
-            ViewBag.c3 = _context.Reviews.Count();
+            ViewBag.Name = product.Name;
 
             _context.Reviews.AddRange(listReview);
             _context.SaveChanges();

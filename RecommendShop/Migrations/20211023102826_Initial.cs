@@ -179,6 +179,7 @@ namespace RecommendShop.Migrations
                     ImageMainUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryIdLevel0 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rating = table.Column<double>(type: "float", nullable: false),
+                    UrlKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

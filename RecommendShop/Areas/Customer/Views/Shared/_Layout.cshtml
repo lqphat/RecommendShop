@@ -37,14 +37,16 @@
                     <h2>RecommendShop</h2>
                 </div>
                 <div class="col-6 search-box align-center">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search this blog">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary button-search" type="button">
-                                <p>TÌM KIẾM</p>
-                            </button>
+                    <form method="post" asp-controller="Search" asp-action="SearchBySlug">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search this blog" name="slug">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary button-search" type="submit">
+                                    <p>TÌM KIẾM</p>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-3 text-center div-login-bag">
                     <button class="btn btn-secondary button-search" id="login" type="button">
